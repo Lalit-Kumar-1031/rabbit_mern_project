@@ -1,33 +1,98 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
+import ProductGrid from "./ProductGrid";
+
+const selectedProduct = {
+  name: "Stylish Jacket",
+  price: 120,
+  originalPrice: 150,
+  description: "This is a stylish jacket perfect for any occasion",
+  brand: "FashionBrand",
+  material: "Leather",
+
+  sizes: ["S", "M", "L", "XL"],
+
+  colors: ["Red", "Black"],
+
+  images: [
+    {
+      url: "https://picsum.photos/500/500?random=1",
+      altText: "Stylish Jacket 1",
+    },
+    {
+      url: "https://picsum.photos/500/500?random=2",
+      altText: "Stylish Jacket 2",
+    },
+    {
+      url: "https://picsum.photos/500/500?random=3",
+      altText: "Stylish Jacket 3",
+    },
+  ],
+};
+
+const similarProducts = [
+  {
+    _id: 1,
+    name: "Product 1",
+    price: 100,
+    images: [{ url: "https://picsum.photos/500/500?random=3" }],
+  },
+  {
+    _id: 2,
+    name: "Product 2",
+    price: 100,
+    images: [{ url: "https://picsum.photos/500/500?random=4" }],
+  },
+  {
+    _id: 3,
+    name: "Product 3",
+    price: 100,
+    images: [{ url: "https://picsum.photos/500/500?random=5" }],
+  },
+  {
+    _id: 4,
+    name: "Product 4",
+    price: 100,
+    images: [{ url: "https://picsum.photos/500/500?random=6" }],
+  },
+];
 
 function ProductDetails() {
-  const selectedProduct = {
-    name: "Stylish Jacket",
-    price: 120,
-    originalPrice: 150,
-    description: "This is a stylish jacket perfect for any occasion",
-    brand: "FashionBrand",
-    material: "Leather",
+  const [mainImage, setMainImage] = useState(null);
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
-    sizes: ["S", "M", "L", "XL"],
-
-    colors: ["Red", "Black"],
-
-    images: [
-      {
-        url: "https://picsum.photos/500/500?random=1",
-        altText: "Stylish Jacket 1",
-      },
-      {
-        url: "https://picsum.photos/500/500?random=2",
-        altText: "Stylish Jacket 2",
-      },
-      {
-        url: "https://picsum.photos/500/500?random=3",
-        altText: "Stylish Jacket 3",
-      },
-    ],
+  const handleQuantityChange = (action) => {
+    if (action === "plus") {
+      setQuantity((prev) => prev + 1);
+    } else if (action === "minus" && quantity > 1) {
+      setQuantity((prev) => prev - 1);
+    }
   };
+
+  const handleAddToCart = () => {
+    if (!selectedSize || !selectedColor) {
+      toast.error("Please Select Color and Size before adding into cart", {
+        duration: 1000,
+      });
+      return;
+    }
+    setIsButtonDisabled(true);
+    setTimeout(() => {
+      toast.success("Product added to the cart !!", {
+        duration: 1000,
+      });
+      setIsButtonDisabled(false);
+    }, 1000);
+  };
+
+  useEffect(() => {
+    if (selectedProduct.images.length > 0) {
+      setMainImage(selectedProduct.images[0].url);
+    }
+  }, []);
 
   return (
     <div className="p-6">
@@ -40,7 +105,8 @@ function ProductDetails() {
                 src={image.url}
                 alt={image.altText || `Thumbnail ${index}`}
                 key={index}
-                className="w-20 h-20 object-cover rounded-lg cursor-pointer border"
+                className={`w-20 h-20 object-cover rounded-lg cursor-pointer ${image.url == mainImage ? "border-2 border-gray-700" : ""}`}
+                onClick={() => setMainImage(image.url)}
               />
             ))}
           </div>
@@ -48,7 +114,7 @@ function ProductDetails() {
           <div className="md:w-1/2">
             <div className="mb-4">
               <img
-                src={selectedProduct.images[1].url}
+                src={mainImage}
                 alt="main Image"
                 className="w-full h-auto object-cover rounded-lg"
               />
@@ -61,7 +127,8 @@ function ProductDetails() {
                 src={image.url}
                 alt={image.altText || `Thumbnail ${index}`}
                 key={index}
-                className="w-20 h-20 object-cover rounded-lg cursor-pointer border"
+                className={`w-20 h-20 object-cover rounded-lg cursor-pointer ${image.url == mainImage ? "border-2 border-gray-700" : ""}`}
+                onClick={() => setMainImage(image.url)}
               />
             ))}
           </div>
@@ -78,7 +145,90 @@ function ProductDetails() {
               $ {selectedProduct.price}
             </p>
             <p className="text-gray-600 mb-4">{selectedProduct.description}</p>
+
+            {/* Product Colors */}
+
+            <div className="mb-4">
+              <p className="text-gray-700"> Color:</p>
+              <div className="flex gap-2 mt-2 ">
+                {selectedProduct.colors.map((color) => (
+                  <button
+                    key={color}
+                    onClick={() => setSelectedColor(color)}
+                    className={`h-8 w-8 rounded-full border cursor-pointer ${selectedColor == color ? "border-4 border-black" : ""}`}
+                    style={{
+                      background: color.toLocaleLowerCase(),
+                      filter: "brightness(0.5)",
+                    }}
+                  ></button>
+                ))}
+              </div>
+            </div>
+            {/* Product Sizes */}
+            <div className="mb-4">
+              <p className="text-gray-700">Size:</p>
+              <div className="flex gap-3 mt-2">
+                {selectedProduct.sizes.map((size) => (
+                  <button
+                    onClick={() => setSelectedSize(size)}
+                    className={`px-4 py-2 border bounded ${selectedSize === size ? "bg-black text-white" : ""}`}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </div>
+            {/* Product Quantity */}
+            <div className="mb-6">
+              <p className="text-gray-700">Quantity:</p>
+              <div className="flex items-center space-x-4 mt-4">
+                <button
+                  onClick={() => handleQuantityChange("minus")}
+                  className="px-4 py-2 bg-gray-300 rounded text-xl"
+                >
+                  -
+                </button>
+                <span className="text-lg">{quantity}</span>
+                <button
+                  onClick={() => handleQuantityChange("plus")}
+                  className="px-4 py-2 bg-gray-300 rounded text-xl"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+            {/* Add to Cart */}
+            <button
+              onClick={handleAddToCart}
+              disabled={isButtonDisabled}
+              className={`bg-black text-white py-2 px-6 rounded w-full mb-4 ${isButtonDisabled ? "cursor-not-allowed opacity-50" : "hover:bg-gray-800"}`}
+            >
+              {isButtonDisabled ? "Adding..." : "ADD TO CART"}
+            </button>
+            {/* Characteristics of brand */}
+            <div className="mt-10 text-gray-700">
+              <h3 className="text-xl font-bold mb-4">Characteristics:</h3>
+              <table className="w-full text-sm text-gray-600">
+                <tbody>
+                  <tr>
+                    <td className="py-1 font-bold">Brand</td>
+                    <td className="py-1">{selectedProduct.brand}</td>
+                  </tr>
+                  <tr>
+                    <td className="py-1 font-bold">Material</td>
+                    <td className="py-1">{selectedProduct.material}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
+        </div>
+        {/* You may also like */}
+        <div className="mt-20">
+          <h2 className="text-2xl text-center font-medium mb-4">
+            You May Also Like
+          </h2>
+          <ProductGrid products={similarProducts} />
         </div>
       </div>
     </div>

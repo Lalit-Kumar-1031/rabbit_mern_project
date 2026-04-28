@@ -55,7 +55,7 @@ function NavBar() {
         </div>
         {/* Right Icons */}
         <div className="flex items-center space-x-6">
-          <Link to="#" className="hover:text-black">
+          <Link to="/profile" className="hover:text-black">
             <FaRegUserCircle className="h-6 w-6 text-gray-700" />
           </Link>
           <button
