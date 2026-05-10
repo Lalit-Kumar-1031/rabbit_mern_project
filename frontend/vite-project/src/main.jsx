@@ -8,6 +8,7 @@ import { Toaster } from "sonner";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Profile from "./pages/Profile.jsx";
+import CollectionPage from "./pages/CollectionPage.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -19,6 +20,10 @@ createRoot(document.getElementById("root")).render(
         <Route path="login" element={<Login />}></Route>
         <Route path="register" element={<Register />}></Route>
         <Route path="profile" element={<Profile />}></Route>
+        <Route
+          path="collections/:collection"
+          element={<CollectionPage />}
+        ></Route>
       </Route>
     </Routes>
   </BrowserRouter>,
