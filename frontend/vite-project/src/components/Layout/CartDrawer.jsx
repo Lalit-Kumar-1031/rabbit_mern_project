@@ -1,7 +1,13 @@
 import { HiMiniXMark } from "react-icons/hi2";
 import CartContents from "../Cart/CartContents";
+import { useNavigate } from "react-router-dom";
 
 function CartDrawer({ drawerOpen, toggleDrawer }) {
+  const navigate = useNavigate();
+
+  const handleCheckoutNavigate = () => {
+    navigate("/checkout");
+  };
   return (
     <div
       className={`fixed top-0 right-0 w-3/4 sm:w-1/2 md:w-1/2.5 lg:w-1/3 h-full bg-white shadow-lg transform transition-transform duration-300 flex flex-col z-50 ${drawerOpen ? "translate-x-0" : "translate-x-full"}`}
@@ -20,7 +26,10 @@ function CartDrawer({ drawerOpen, toggleDrawer }) {
       </div>
       {/* Checkout button at fixed */}
       <div className="p-4 bg-white sticky border-0">
-        <button className="w-full bg-black text-white rounded-lg py-3 font-semibold hover:bg-gray-800 transition">
+        <button
+          onClick={handleCheckoutNavigate}
+          className="w-full bg-black text-white rounded-lg py-3 font-semibold hover:bg-gray-800 transition"
+        >
           Checkout
         </button>
         <p className="text-sm tracking-tighter text-gray-500 mt-2 text-center">
