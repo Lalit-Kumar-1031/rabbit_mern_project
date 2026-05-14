@@ -60,6 +60,49 @@ function OrderConfirmationPage() {
             </div>
           </div>
           {/* order Items */}
+          <div className="mb-20">
+            {checkout.checkoutItems.map((item) => (
+              <div key={item._id} className="flex justify-between">
+                {/* Left section */}
+                <div className="mb-4 flex items-center">
+                  <img
+                    src={item.image}
+                    className="w-16 h-16 rounded-md object-cover mr-4"
+                  />
+                  <div>
+                    <h4 className="text-md font-semibold">{item.name}</h4>
+                    <p className="text-sm text-gray-500">
+                      {item.color} | {item.size}
+                    </p>
+                  </div>
+                </div>
+                {/* Right Side */}
+                <div>
+                  <p className="text-md">${item.price}</p>
+                  <p className="text-sm text-gray-500">Qty: {item.quantity} </p>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Payment and delivery info */}
+          <div className="grid grid-cols-2 gap-8">
+            {/* Payment info */}
+            <div>
+              <h4 className="text-lg font-semibold mb-2 ">Payment Method</h4>
+              <p className="text-gray-500">Paypal</p>
+            </div>
+            {/* Delivery Info */}
+            <div>
+              <h4 className="text-lg font-semibold mb-2">Delivery</h4>
+              <p className="text-gray-600">
+                {checkout.shippingAddress.address}
+              </p>
+              <p className="text-gray-600">
+                {checkout.shippingAddress.city},
+                {checkout.shippingAddress.country}
+              </p>
+            </div>
+          </div>
         </div>
       )}
     </div>

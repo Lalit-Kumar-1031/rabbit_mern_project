@@ -12,6 +12,7 @@ import CollectionPage from "./pages/CollectionPage.jsx";
 import ProductDetails from "./components/Products/ProductDetails.jsx";
 import Checkout from "./components/Cart/Checkout.jsx";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage.jsx";
+import OrderDetailsPage from "./pages/OrderDetailsPage.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -33,6 +34,7 @@ createRoot(document.getElementById("root")).render(
           path="order-confirmation"
           element={<OrderConfirmationPage />}
         ></Route>
+        <Route path="order/:id" element={<OrderDetailsPage />}></Route>
       </Route>
     </Routes>
   </BrowserRouter>,
