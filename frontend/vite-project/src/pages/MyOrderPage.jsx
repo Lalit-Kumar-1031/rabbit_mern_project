@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function MyOrderPage() {
   const [orders, setOrders] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // fetching the order
@@ -97,6 +100,10 @@ function MyOrderPage() {
     }, 1000);
   }, []);
 
+  const handleRowClick = (orderId) => {
+    navigate(`/order/${orderId}`);
+  };
+
   return (
     <div className="w-full mx-auto p-4 sm:p-6">
       <h2 className="text-xl sm:text-2xl font-bold mb-6 ">My Orders</h2>
@@ -116,7 +123,11 @@ function MyOrderPage() {
           <tbody>
             {orders.length > 0 ? (
               orders.map((order) => (
-                <tr key={order._id}>
+                <tr
+                  key={order._id}
+                  onClick={() => handleRowClick(order._id)}
+                  className="cursor-pointer"
+                >
                   <td className="py-2 px-2 sm:py-4 sm:px-4">
                     <img
                       src={order.orderItems[0].image}

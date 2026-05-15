@@ -13,6 +13,8 @@ import ProductDetails from "./components/Products/ProductDetails.jsx";
 import Checkout from "./components/Cart/Checkout.jsx";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage.jsx";
 import OrderDetailsPage from "./pages/OrderDetailsPage.jsx";
+import MyOrderPage from "./pages/MyOrderPage.jsx";
+import AdminLayout from "./components/Admin/AdminLayout.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -35,7 +37,9 @@ createRoot(document.getElementById("root")).render(
           element={<OrderConfirmationPage />}
         ></Route>
         <Route path="order/:id" element={<OrderDetailsPage />}></Route>
+        <Route path="my-orders" element={<MyOrderPage />}></Route>
       </Route>
+      <Route path="/admin" element={<AdminLayout />}></Route>
     </Routes>
   </BrowserRouter>,
 );
