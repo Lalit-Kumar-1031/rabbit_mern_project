@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import AdminSideBar from "./AdminSideBar";
+import { Outlet } from "react-router-dom";
 
 function AdminLayout() {
   const [isSideBarOpen, setIsSideBarOpen] = useState();
@@ -34,6 +35,9 @@ function AdminLayout() {
       </div>
 
       {/* Main Content */}
+      <div className="grow p-6 overflow-auto">
+        <Outlet />
+      </div>
     </div>
   );
 }
