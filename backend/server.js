@@ -2,8 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv").config();
 const connectDB = require("./config/db.js");
-const userRouter = require("./routes/userRouter.js");
 
+//Routers Imports
+const userRouter = require("./routes/userRouter.js");
+const productRouter=require("./routes/productRouter.js")
 const app = express();
 
 app.use(express.json());
@@ -20,6 +22,7 @@ app.get("/", (req, res) => {
 
 //API Routes
 app.use("/api/users", userRouter);
+app.use("/api/products", productRouter);
 
 // start the server
 app.listen(PORT, () => {
