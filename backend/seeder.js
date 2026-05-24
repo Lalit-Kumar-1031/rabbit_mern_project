@@ -3,6 +3,7 @@ const dotenv = require("dotenv").config();
 const Product = require("./models/Product");
 const User = require("./models/User");
 const products = require("./data/products");
+const Cart = require("./models/Cart");
 
 // connect the MongoDB
 mongoose.connect(process.env.MONGO_URI);
@@ -16,6 +17,7 @@ const seedData = async () => {
     // clear the existing data
     await Product.deleteMany();
     await User.deleteMany();
+    await Cart.deleteMany();
 
     // create a default admin user
     const createdUser = await User.create({
