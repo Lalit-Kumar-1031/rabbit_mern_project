@@ -5,7 +5,8 @@ const connectDB = require("./config/db.js");
 
 //Routers Imports
 const userRouter = require("./routes/userRouter.js");
-const productRouter=require("./routes/productRouter.js")
+const productRouter = require("./routes/productRouter.js");
+const cartRouter = require("./routes/cartRouter.js");
 const app = express();
 
 app.use(express.json());
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 //API Routes
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
+app.use("/api/cart", cartRouter);
 
 // start the server
 app.listen(PORT, () => {
