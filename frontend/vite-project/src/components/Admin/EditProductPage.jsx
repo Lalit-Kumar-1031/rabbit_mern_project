@@ -32,10 +32,20 @@ function EditProductPage() {
     const { name, value } = e.target;
     setProductData((prevData) => ({ ...prevData, [name]: value }));
   };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    console.log("File =>", file);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submit Data=>", productData);
+  };
   return (
     <div className="max-w-5xl mx-auto p-6 shadow-md rounded-md">
       <h2 className="text-2xl font-bold mb-6">Edit Product</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         {/* Product Name */}
         <div className="mb-6">
           <label className="block font-semibold mb-3">Product Name</label>
@@ -138,6 +148,32 @@ function EditProductPage() {
           />
         </div>
         {/* Image Upload */}
+        <div className="mb-6">
+          <label className="block font-semibold mb-2">Image Upload</label>
+          <input
+            type="file"
+            className="bg-gray-100 border px-2 py-1"
+            onChange={handleImageUpload}
+          />
+          <div className="mt-4 flex gap-4">
+            {productData.images.map((image, index) => (
+              <div key={index}>
+                <img
+                  src={image.url}
+                  alt="Product Image"
+                  className="h-20 w-20 object-cover rounded-md shadow-md"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* Update Button */}
+        <button
+          type="submit"
+          className="bg-green-500 text-white rounded-lg hover:bg-green-600 p-2 shadow-md w-full transition-colors"
+        >
+          Update Product
+        </button>
       </form>
     </div>
   );
