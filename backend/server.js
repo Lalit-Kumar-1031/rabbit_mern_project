@@ -7,6 +7,7 @@ const connectDB = require("./config/db.js");
 const userRouter = require("./routes/userRouter.js");
 const productRouter = require("./routes/productRouter.js");
 const cartRouter = require("./routes/cartRouter.js");
+const checkoutRouter = require("./routes/checkoutRouter.js");
 const app = express();
 
 app.use(express.json());
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartRouter);
+app.use("/api/checkout", checkoutRouter);
 
 // start the server
 app.listen(PORT, () => {
