@@ -8,6 +8,8 @@ const userRouter = require("./routes/userRouter.js");
 const productRouter = require("./routes/productRouter.js");
 const cartRouter = require("./routes/cartRouter.js");
 const checkoutRouter = require("./routes/checkoutRouter.js");
+const orderRouter = require("./routes/orderRouter.js");
+const uploadRouter = require("./routes/uploadRouter.js");
 const app = express();
 
 app.use(express.json());
@@ -27,6 +29,8 @@ app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/checkout", checkoutRouter);
+app.use("/api/orders", orderRouter);
+app.use("/api/upload", uploadRouter);
 
 // start the server
 app.listen(PORT, () => {
