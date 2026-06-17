@@ -1,4 +1,4 @@
-import { create, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const Base_Url = import.meta.env.VITE_BACKEND_URL;

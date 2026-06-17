@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
@@ -10,97 +11,27 @@ const NewArrivalsSlider = () => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
-  const newArrivals = [
-    {
-      _id: "1",
-      name: "Stylish Jacket",
-      price: 120,
-      images: [
-        {
-          url: "https://picsum.photos/200?random=1",
-          altText: "Stylish Jacket",
-        },
-      ],
-    },
-    {
-      _id: "2",
-      name: "Casual T-Shirt",
-      price: 40,
-      images: [
-        {
-          url: "https://picsum.photos/200?random=2",
-          altText: "Casual T-Shirt",
-        },
-      ],
-    },
-    {
-      _id: "3",
-      name: "Denim Jeans",
-      price: 80,
-      images: [
-        { url: "https://picsum.photos/200?random=3", altText: "Denim Jeans" },
-      ],
-    },
-    {
-      _id: "4",
-      name: "Running Shoes",
-      price: 95,
-      images: [
-        { url: "https://picsum.photos/200?random=4", altText: "Running Shoes" },
-      ],
-    },
-    {
-      _id: "5",
-      name: "Leather Wallet",
-      price: 60,
-      images: [
-        {
-          url: "https://picsum.photos/200?random=5",
-          altText: "Leather Wallet",
-        },
-      ],
-    },
-    {
-      _id: "6",
-      name: "Smart Watch",
-      price: 150,
-      images: [
-        { url: "https://picsum.photos/200?random=6", altText: "Smart Watch" },
-      ],
-    },
-    {
-      _id: "7",
-      name: "Backpack",
-      price: 70,
-      images: [
-        { url: "https://picsum.photos/200?random=7", altText: "Backpack" },
-      ],
-    },
-    {
-      _id: "8",
-      name: "Sunglasses",
-      price: 55,
-      images: [
-        { url: "https://picsum.photos/200?random=8", altText: "Sunglasses" },
-      ],
-    },
-    {
-      _id: "9",
-      name: "Formal Shirt",
-      price: 65,
-      images: [
-        { url: "https://picsum.photos/200?random=9", altText: "Formal Shirt" },
-      ],
-    },
-    {
-      _id: "10",
-      name: "Sports Cap",
-      price: 25,
-      images: [
-        { url: "https://picsum.photos/200?random=10", altText: "Sports Cap" },
-      ],
-    },
-  ];
+  const [newArrivals, setNewArrivals] = useState([]);
+
+  useEffect(() => {
+    const fetchNewArrivals = async () => {
+      console.log("Data ==>");
+
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/products/new-arrivals`,
+        );
+
+        console.log("Data ==>", response.data);
+
+        setNewArrivals(response.data);
+      } catch (error) {
+        console.log("Error in Fetch newArrivals =>", error);
+      }
+    };
+
+    fetchNewArrivals();
+  }, []);
 
   const handleMouseDown = (e) => {
     setIsDragging(true);
@@ -142,7 +73,7 @@ const NewArrivalsSlider = () => {
       updateScrollButtons();
       return () => container.removeEventListener("scroll", updateScrollButtons);
     }
-  }, []);
+  }, [newArrivals]);
 
   return (
     <section>
