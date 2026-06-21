@@ -18,11 +18,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=39",
+        url: "https://image.hm.com/assets/hm/3e/96/3e96fe2879706433dfb4fad614056d6a10a96caa.jpg?imwidth=2160",
         altText: "Classic Oxford Button-Down Shirt Front View",
       },
       {
-        url: "https://picsum.photos/500/500?random=40",
+        url: "https://image.hm.com/assets/hm/19/bf/19bfe7b4a947bc23aa432ed54bb3a86c7aca32b2.jpg?imwidth=2160",
         altText: "Classic Oxford Button-Down Shirt Back View",
       },
     ],
@@ -46,11 +46,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=41",
+        url: "https://image.hm.com/assets/hm/19/bf/19bfe7b4a947bc23aa432ed54bb3a86c7aca32b2.jpg?imwidth=2160",
         altText: "Slim-Fit Stretch Shirt Front View",
       },
       {
-        url: "https://picsum.photos/500/500?random=42",
+        url: "https://image.hm.com/assets/hm/3e/96/3e96fe2879706433dfb4fad614056d6a10a96caa.jpg?imwidth=2160",
         altText: "Slim-Fit Stretch Shirt Back View",
       },
     ],
@@ -74,11 +74,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=43",
+        url: "https://image.hm.com/assets/hm/b9/8c/b98cc28334dbca2b4624bc1084662a15fa606e2d.jpg?imwidth=2160",
         altText: "Casual Denim Shirt Front View",
       },
       {
-        url: "https://picsum.photos/500/500?random=44",
+        url: "https://chapter2drip.com/cdn/shop/files/Untitled_Session2214.jpg?v=1771314537&width=1445",
         altText: "Casual Denim Shirt Back View",
       },
     ],
@@ -102,11 +102,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=45",
+        url: "https://image.hm.com/assets/hm/a3/ef/a3ef18ad08c3c47e019cc254ad34795934cb06b5.jpg?imwidth=2160",
         altText: "Printed Resort Shirt Front View",
       },
       {
-        url: "https://picsum.photos/500/500?random=1",
+        url: "https://image.hm.com/assets/hm/60/1e/601e2f774a37f7a723f4f1449a7a892197e9a2da.jpg?imwidth=2160",
         altText: "Printed Resort Shirt Back View",
       },
     ],
@@ -130,11 +130,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=47",
+        url: "https://image.hm.com/assets/hm/74/d7/74d7cf948bc4377fb6d1bfcbfa31a1f0478bcc0e.jpg?imwidth=2160",
         altText: "Slim-Fit Easy-Iron Shirt Front View",
       },
       {
-        url: "https://picsum.photos/500/500?random=2",
+        url: "https://image.hm.com/assets/hm/74/d7/74d7cf948bc4377fb6d1bfcbfa31a1f0478bcc0e.jpg?imwidth=2160",
         altText: "Slim-Fit Easy-Iron Shirt Front View",
       },
     ],
@@ -158,11 +158,11 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=3",
+        url: "https://image.hm.com/assets/hm/b2/d2/b2d2be58ce0c711e1034c0c8b843c4fd3003c7c7.jpg?imwidth=2160",
         altText: "Polo T-Shirt Front View",
       },
       {
-        url: "https://picsum.photos/500/500?random=4",
+        url: "https://image.hm.com/assets/hm/b2/d2/b2d2be58ce0c711e1034c0c8b843c4fd3003c7c7.jpg?imwidth=2160",
         altText: "Polo T-Shirt Back View",
       },
     ],
@@ -186,7 +186,7 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=5",
+        url: "https://image.hm.com/assets/hm/54/d9/54d99d31db56b9ff6587b5ea22de54d12275ce7c.jpg?imwidth=2160",
         altText: "Oversized Graphic T-Shirt Front View",
       },
     ],
@@ -210,7 +210,7 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=6",
+        url: "https://image.hm.com/assets/hm/07/46/0746cdbb4321044703aa2414cd7b3c6ebd433046.jpg?imwidth=2160",
         altText: "Regular-Fit Henley Shirt Front View",
       },
     ],
@@ -282,7 +282,7 @@ const products = [
     gender: "Men",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=9",
+        url: "https://image.hm.com/assets/hm/07/46/0746cdbb4321044703aa2414cd7b3c6ebd433046.jpg?imwidth=2160",
         altText: "Slim Fit Joggers Front View",
       },
     ],
@@ -642,7 +642,7 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=24",
+        url: "https://image.hm.com/assets/hm/d8/43/d84362489005c602f1f3cffd12a139c1c4ab6c20.jpg?imwidth=2160",
         altText: "High-Rise Joggers Front View",
       },
     ],
@@ -666,7 +666,7 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=25",
+        url: "https://image.hm.com/assets/hm/8e/1b/8e1b423e3e697743256dcdf7bd31513a42e2b95a.jpg?imwidth=2160",
         altText: "Paperbag Waist Shorts Front View",
       },
     ],
@@ -690,7 +690,7 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=26",
+        url: "https://image.hm.com/assets/hm/c4/02/c40280d9d6652cddc0015a10111ef07b5c002cd1.jpg?imwidth=2160",
         altText: "Stretch Denim Shorts Front View",
       },
     ],
@@ -714,7 +714,7 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=27",
+        url: "https://image.hm.com/assets/hm/ce/e0/cee078f57508b066602fb0a74b3733f5752c4719.jpg?imwidth=2160",
         altText: "Culottes Front View",
       },
     ],
@@ -738,7 +738,7 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=28",
+        url: "https://image.hm.com/assets/hm/31/8d/318df585675e809a78cd31e4f04cae5b5aed0003.jpg?imwidth=2160",
         altText: "Classic Pleated Trousers Front View",
       },
     ],
@@ -762,7 +762,7 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=29",
+        url: "https://image.hm.com/assets/hm/eb/a6/eba6864a85192066c5655794e332281018ae8228.jpg?imwidth=2160",
         altText: "Knitted Cropped Top",
       },
     ],
@@ -786,7 +786,7 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=30",
+        url: "https://image.hm.com/assets/hm/74/8f/748f41582f5c66f09c9e1448e60f10bfdc5313b1.jpg?imwidth=2160",
         altText: "Boho Floral Blouse",
       },
     ],
@@ -810,7 +810,7 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=31",
+        url: "https://image.hm.com/assets/hm/e3/d4/e3d41f92c5ede24931b366890859870a71014098.jpg?imwidth=2160",
         altText: "Casual T-Shirt",
       },
     ],
@@ -834,7 +834,7 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=32",
+        url: "https://image.hm.com/assets/hm/eb/b4/ebb4afa03cd50561aec280ffa64678fe2831a1b2.jpg?imwidth=2160",
         altText: "Off-Shoulder Top",
       },
     ],
