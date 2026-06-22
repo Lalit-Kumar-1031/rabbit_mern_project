@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import Loading from "../Common/Loading";
 
 const NewArrivalsSlider = () => {
   const scrollRef = useRef(null);
@@ -109,26 +110,30 @@ const NewArrivalsSlider = () => {
         onMouseLeave={handleMouseUpOrLeave}
         className={`container mx-auto overflow-x-scroll flex space-x-6 relative px-6 ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
       >
-        {newArrivals.map((product) => (
-          <div
-            key={product._id}
-            className="min-w-full sm:min-w-[50%] lg:min-w-[30%] relative "
-          >
-            <img
-              src={product.images[0].url}
-              alt={product.images[0].altText || product.name}
-              className="w-full h-125 object-cover rounded-lg"
-              draggable="false"
-            />
+        {newArrivals.length == 0 ? (
+          <Loading Title="Products Loading..."></Loading>
+        ) : (
+          newArrivals.map((product) => (
+            <div
+              key={product._id}
+              className="min-w-full sm:min-w-[50%] lg:min-w-[30%] relative "
+            >
+              <img
+                src={product.images[0].url}
+                alt={product.images[0].altText || product.name}
+                className="w-full h-125 object-cover rounded-lg"
+                draggable="false"
+              />
 
-            <div className="absolute bottom-0 left-0 right-0 backdrop-blur-md text-white rounded-b-lg p-4">
-              <Link to={`/product/${product._id}`} className="block">
-                <h4 className="font-medium">{product.name}</h4>
-                <p className="mt-1">${product.price}</p>
-              </Link>
+              <div className="absolute bottom-0 left-0 right-0 backdrop-blur-md text-white rounded-b-lg p-4">
+                <Link to={`/product/${product._id}`} className="block">
+                  <h4 className="font-medium">{product.name}</h4>
+                  <p className="mt-1">${product.price}</p>
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </section>
   );

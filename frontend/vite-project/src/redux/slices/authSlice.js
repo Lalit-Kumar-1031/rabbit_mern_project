@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { use } from "react";
 
 //Retrieve the user info and token from local storage
 const userFromStorage = localStorage.getItem("userInfo")

@@ -858,7 +858,7 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=33",
+        url: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQThu0YzF7Q9sC5hCTzQ_Rbib4Q_kAaxrYUlsKLxVWJTDoJ5vfj2iCJOpJScAC7_YUvzoeGUrp58GXPYHJwHFxUv_Mn5cI7Sq6mQR907tE",
         altText: "Lace-Trimmed Cami Top",
       },
     ],
@@ -882,7 +882,7 @@ const products = [
     gender: "Women",
     images: [
       {
-        url: "https://picsum.photos/500/500?random=34",
+        url: "https://m.media-amazon.com/images/I/61SRTkJ7WpL._SY879_.jpg",
         altText: "Graphic Print Tee",
       },
     ],

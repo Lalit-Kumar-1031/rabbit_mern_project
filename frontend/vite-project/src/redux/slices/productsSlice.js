@@ -45,10 +45,16 @@ export const fetchProductsByFilters = createAsyncThunk(
 export const fetchProductDetails = createAsyncThunk(
   "products/fetchProductDetails",
   async (id) => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_BACKEND_URL}/api/products/${id}`,
-    );
-    return response.data;
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/products/${id}`,
+      );
+      console.log("Product Details=>", response.data);
+
+      return response.data;
+    } catch (error) {
+      console.log("Error in Product Details=>", error.response.data);
+    }
   },
 );
 
