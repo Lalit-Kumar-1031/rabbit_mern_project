@@ -4,7 +4,7 @@ import Loading from "../Common/Loading";
 
 function ProductGrid({ products, loading, error }) {
   if (loading) {
-    return <Loading Title="Loading Women Top Wear"></Loading>;
+    return <Loading Title="Loading the Products"></Loading>;
   } else if (error) {
     return <p>Error :{error}</p>;
   }
@@ -21,7 +21,7 @@ function ProductGrid({ products, loading, error }) {
               <img
                 src={product.images[0].url}
                 alt={product.name}
-                className="w-full h-full object-cover rounded-lg"
+                className="w-full h-full object-top rounded-lg"
               />
             </div>
             <h3 className="text-sm mb-2">{product.name}</h3>

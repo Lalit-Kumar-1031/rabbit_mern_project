@@ -1,13 +1,21 @@
 import { HiMiniXMark } from "react-icons/hi2";
 import CartContents from "../Cart/CartContents";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function CartDrawer({ drawerOpen, toggleDrawer }) {
   const navigate = useNavigate();
+  const { user, guestId } = useSelector((state) => state.auth);
+  const { cart } = useSelector((state) => state.cart);
+  const userId = user ? user._id : null;
 
   const handleCheckoutNavigate = () => {
     toggleDrawer();
-    navigate("/checkout");
+    if (!user) {
+      navigate("/login?redirect=checkout");
+    } else {
+      navigate("/checkout");
+    }
   };
   return (
     <div
@@ -23,19 +31,27 @@ function CartDrawer({ drawerOpen, toggleDrawer }) {
       <div className="grow p-4 overflow-y-auto">
         <h2 className="text-xl font-semibold mb-4">Your Cart</h2>
         {/* Cart Item List */}
-        <CartContents />
+        {cart && cart?.products?.length > 0 ? (
+          <CartContents cart={cart} userId={userId} guestId={guestId} />
+        ) : (
+          <p>Your Cart is empty</p>
+        )}
       </div>
       {/* Checkout button at fixed */}
       <div className="p-4 bg-white sticky border-0">
-        <button
-          onClick={handleCheckoutNavigate}
-          className="w-full bg-black text-white rounded-lg py-3 font-semibold hover:bg-gray-800 transition"
-        >
-          Checkout
-        </button>
-        <p className="text-sm tracking-tighter text-gray-500 mt-2 text-center">
-          Shipping, taxes, and discount code calculated at checkout.{" "}
-        </p>
+        {cart && cart?.products?.length > 0 && (
+          <>
+            <button
+              onClick={handleCheckoutNavigate}
+              className="w-full bg-black text-white rounded-lg py-3 font-semibold hover:bg-gray-800 transition"
+            >
+              Checkout
+            </button>
+            <p className="text-sm tracking-tighter text-gray-500 mt-2 text-center">
+              Shipping, taxes, and discount code calculated at checkout.{" "}
+            </p>
+          </>
+        )}
       </div>
     </div>
   );

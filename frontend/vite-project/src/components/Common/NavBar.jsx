@@ -6,10 +6,16 @@ import SearchBar from "./SearchBar";
 import React, { useState } from "react";
 import CartDrawer from "../Layout/CartDrawer";
 import { HiMiniXMark } from "react-icons/hi2";
+import { useSelector } from "react-redux";
 
 function NavBar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const { cart } = useSelector((state) => state.cart);
+
+  const cartItemCount =
+    cart?.products?.reduce((total, product) => total + product.quantity, 0) ||
+    0;
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
@@ -29,25 +35,25 @@ function NavBar() {
         {/* Center nav Items */}
         <div className="hidden md:flex space-x-6">
           <Link
-            to="/collections/all"
+            to="/collections/all?gender=Men"
             className="text-gray-700 hover:text-black text-sm uppercase font-medium"
           >
             Men
           </Link>
           <Link
-            to="#"
+            to="/collections/all?gender=Women"
             className="text-gray-700 hover:text-black text-sm uppercase font-medium"
           >
             Women
           </Link>
           <Link
-            to="#"
+            to="/collections/all?category=Top Wear"
             className="text-gray-700 hover:text-black text-sm uppercase font-medium"
           >
             Top Wear
           </Link>
           <Link
-            to="#"
+            to="/collections/all?category=Bottom Wear"
             className="text-gray-700 hover:text-black text-sm uppercase font-medium"
           >
             Bottom Wear
@@ -71,9 +77,11 @@ function NavBar() {
             className="relative hover:text-black"
           >
             <FaShoppingCart className="h-6 w-6 text-gray-700" />
-            <span className="absolute -top-1 bg-[#ea2e0e] text-white text-xs rounded-full px-2 py-0.5">
-              5
-            </span>
+            {cartItemCount > 0 && (
+              <span className="absolute -top-1 bg-[#ea2e0e] text-white text-xs rounded-full px-2 py-0.5">
+                {cartItemCount}
+              </span>
+            )}
           </button>
           {/* Search Icon */}
           <div className="overflow-hidden">
@@ -103,28 +111,28 @@ function NavBar() {
           {/* Nav Items */}
           <nav className="space-y-4">
             <Link
-              to="#"
+              to="/collections/all?gender=Men"
               onClick={toggleMobileDrawer}
               className="text-gray-600 hover:text-black block"
             >
               Men
             </Link>
             <Link
-              to="#"
+              to="/collections/all?gender=Women"
               onClick={toggleMobileDrawer}
               className="text-gray-600 hover:text-black block"
             >
               Women
             </Link>
             <Link
-              to="#"
+              to="/collections/all?category=Top Wear"
               onClick={toggleMobileDrawer}
               className="text-gray-600 hover:text-black block"
             >
               Top Wear
             </Link>
             <Link
-              to="#"
+              to="/collections/all?category=Bottom Wear"
               onClick={toggleMobileDrawer}
               className="text-gray-600 hover:text-black block"
             >

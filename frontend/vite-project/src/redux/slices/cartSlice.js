@@ -60,7 +60,7 @@ export const updateCartItemQuantity = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const response = await axios.post(`${Base_Url}/api/cart`, {
+      const response = await axios.put(`${Base_Url}/api/cart`, {
         productId,
         size,
         color,
@@ -81,11 +81,13 @@ export const removeFromCart = createAsyncThunk(
   async ({ productId, size, color, userId, guestId }, { rejectWithValue }) => {
     try {
       const response = await axios.delete(`${Base_Url}/api/cart`, {
-        productId,
-        size,
-        color,
-        userId,
-        guestId,
+        data: {
+          productId,
+          size,
+          color,
+          userId,
+          guestId,
+        },
       });
       return response.data;
     } catch (error) {
