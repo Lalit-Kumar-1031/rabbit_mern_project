@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { HiMiniXMark } from "react-icons/hi2";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { fetchProductsByFilters, setFilters } from "../../redux/slices/productsSlice";
 
 function SearchBar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
 
   const handleSearchToggle = () => {
     setIsSearchBarOpen(!isSearchBarOpen);
@@ -12,7 +17,9 @@ function SearchBar() {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    console.log("Search ==>", searchQuery);
+   dispatch(setFilters({search:searchQuery}));
+   dispatch(fetchProductsByFilters({search:searchQuery}));
+   navigate(`/collections/all?search=${searchQuery}`);
     setIsSearchBarOpen(false);
   };
 
