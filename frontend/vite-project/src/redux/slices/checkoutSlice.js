@@ -8,7 +8,9 @@ const Base_Url = import.meta.env.VITE_BACKEND_URL;
 export const createCheckout = createAsyncThunk(
   "checkout/createCheckout",
   async ({ checkoutData }, { rejectWithValue }) => {
+
     try {
+      console.log("Token =>",`Bearer ${localStorage.getItem("userToken")}`);
       const response = await axios.post(
         `${Base_Url}/api/checkout`,
         checkoutData,
@@ -20,6 +22,8 @@ export const createCheckout = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
+      console.log("Error =>",error);
+      
       return rejectWithValue(error.response.data);
     }
   },

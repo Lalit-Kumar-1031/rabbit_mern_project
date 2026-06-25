@@ -13,8 +13,10 @@ const checkoutRouter = express.Router();
 
 checkoutRouter.post("/", protect, async (req, res) => {
   try {
+    console.log("Req Body =>",req.body);
     const { checkoutItems, shippingAddress, paymentMethod, totalPrice } =
       req.body;
+      
 
     if (!checkoutItems || checkoutItems.length === 0) {
       return res.status(400).json({ message: "No items in checkout" });
@@ -34,6 +36,7 @@ checkoutRouter.post("/", protect, async (req, res) => {
     console.log(`Checkout Session created for the user ${req.user._id}`);
     res.status(201).json(newCheckout);
   } catch (e) {
+    console.log("Error in API=>",e);
     res.status(500).json({ message: e.message });
   }
 });

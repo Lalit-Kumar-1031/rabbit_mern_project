@@ -31,7 +31,7 @@ export const loginUser = createAsyncThunk(
       );
 
       localStorage.setItem("userInfo", JSON.stringify(response.data.user));
-      localStorage.setItem("userToken", JSON.stringify(response.data.token));
+      localStorage.setItem("userToken", response.data.token);
       return response.data.user;
     } catch (e) {
       return rejectWithValue(e.response.data);
@@ -50,7 +50,7 @@ export const registerUser = createAsyncThunk(
       );
 
       localStorage.setItem("userInfo", JSON.stringify(response.data.user));
-      localStorage.setItem("userToken", JSON.stringify(response.data.token));
+      localStorage.setItem("userToken", esponse.data.token);
       return response.data.user;
     } catch (e) {
       return rejectWithValue(e.response.data);
@@ -96,7 +96,7 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.error = null;
       })
       .addCase(registerUser.rejected, (state, action) => {
