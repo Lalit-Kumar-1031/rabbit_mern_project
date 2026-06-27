@@ -11,7 +11,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../../redux/slices/authSlice";
 import { clearCart } from "../../redux/slices/cartSlice";
 
-function AdminSideBar() {
+function AdminSideBar({closeSideBar}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -32,6 +32,7 @@ function AdminSideBar() {
       <nav className="flex flex-col space-y-2">
         <NavLink
           to="/admin/users"
+          onClick={closeSideBar}
           className={({ isActive }) =>
             isActive
               ? "bg-gray-700 text-white py-3 px-4 rounded flex items-centers space-x-2 "
@@ -43,6 +44,7 @@ function AdminSideBar() {
         </NavLink>
         <NavLink
           to="/admin/products"
+          onClick={closeSideBar}
           className={({ isActive }) =>
             isActive
               ? "bg-gray-700 text-white py-3 px-4 rounded flex items-centers space-x-2 "
@@ -54,6 +56,7 @@ function AdminSideBar() {
         </NavLink>
         <NavLink
           to="/admin/orders"
+          onClick={closeSideBar}
           className={({ isActive }) =>
             isActive
               ? "bg-gray-700 text-white py-3 px-4 rounded flex items-centers space-x-2 "
@@ -64,6 +67,7 @@ function AdminSideBar() {
           <span>Orders</span>
         </NavLink>
         <NavLink
+        onClick={closeSideBar}
           to="/"
           className={({ isActive }) =>
             isActive

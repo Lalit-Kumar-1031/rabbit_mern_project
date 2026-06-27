@@ -63,7 +63,7 @@ function UserManagement() {
   return (
     <div className="max-w-7xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-6">User Management</h2>
-      {loading && <Loading Title="UsersLoading..."></Loading>}
+      {loading && <Loading Title="Users Loading..."></Loading>}
       {error && <p>Error : {error}</p>}
       {/* Add New User Form */}
       <div className="p-6 rounded-lg mb-6">
