@@ -1,21 +1,28 @@
 import React from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import {fetchAdminProducts,deleteProduct} from '../../redux/slices/adminProductSlice';
+import Loading from "../Common/Loading";
 
 function ProductManagement() {
-  const products = [
-    {
-      _id: "983737",
-      name: "T-Shirt",
-      price: 120,
-      sku: "#10272828",
-    },
-  ];
+  const dispatch=useDispatch();
+  const {products,loading,error}=useSelector((state)=>state.adminProducts);
+
+  useEffect(()=>{
+    dispatch(fetchAdminProducts());
+  },[dispatch]);
 
   const handleProductDelete = (productId) => {
     if (window.confirm("Are you sure, you want to delete this product?")) {
-      console.log("Yes Please", productId);
+      dispatch(deleteProduct(productId));
     }
   };
+
+
+  if(loading) return <Loading Title="Loading..."></Loading>;
+  if(error) return <p>Error : {error}</p>;
+
   return (
     <div className="max-w-7xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-6">Product Management</h2>
@@ -42,7 +49,7 @@ function ProductManagement() {
                   </td>
                   <td>${product.price}</td>
                   <td>{product.sku}</td>
-                  <td className="space-x-2 p-4">
+                  <td className="space-x-2 p-4 space-y-2 sm:space-y-0 flex flex-col sm:flex-row">
                     <Link
                       to={`/admin/products/${product._id}/edit`}
                       className="p-2 bg-amber-400 hover:bg-amber-500 text-white rounded"

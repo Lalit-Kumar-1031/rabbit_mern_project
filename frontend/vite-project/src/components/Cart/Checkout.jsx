@@ -75,7 +75,7 @@ const Checkout = () => {
   const handleFinalizeCheckout = async (checkoutId) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/checkout${checkoutId}/finalize`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/checkout/${checkoutId}/finalize`,
         {},
         {
           headers: {

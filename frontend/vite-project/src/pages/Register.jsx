@@ -10,33 +10,32 @@ function Register() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
-  const dispatch=useDispatch();
-  const navigate=useNavigate();
-  const location=useLocation();
-  const {user,guestId} =useSelector((state)=>state.auth);
-  const {cart}=useSelector((state)=>state.cart);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user, guestId, loading } = useSelector((state) => state.auth);
+  const { cart } = useSelector((state) => state.cart);
 
   //Get the redirection parameter and check if its checkout and something else
-  const redirect=new URLSearchParams(location.search).get("redirect")||"/";
-  const isCheckoutRedirect=redirect.includes("checkout");
+  const redirect = new URLSearchParams(location.search).get("redirect") || "/";
+  const isCheckoutRedirect = redirect.includes("checkout");
 
-
-  useEffect(()=>{
-    if(user){
-      if(cart?.products.length>0 && guestId){
-        dispatch(mergeCart({guestId,user})).then(()=>{
-          navigate(isCheckoutRedirect?"/checkout":"/");
-        })
-      }else{
-        navigate(isCheckoutRedirect?"/checkout":"/");
+  useEffect(() => {
+    if (user) {
+      if (cart?.products.length > 0 && guestId) {
+        dispatch(mergeCart({ guestId, user })).then(() => {
+          navigate(isCheckoutRedirect ? "/checkout" : "/");
+        });
+      } else {
+        navigate(isCheckoutRedirect ? "/checkout" : "/");
       }
     }
-  },[user,guestId,cart,navigate,isCheckoutRedirect,dispatch]);
+  }, [user, guestId, cart, navigate, isCheckoutRedirect, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Register ==>", { email, password, name });
-    dispatch(registerUser({email, password, name}));
+    dispatch(registerUser({ email, password, name }));
   };
   return (
     <div className="flex">
@@ -83,12 +82,15 @@ function Register() {
             type="submit"
             className="bg-black text-white rounded-lg hover:bg-gray-700 text-center w-full p-2 font-semibold mt-2"
           >
-            Sign Up
+            {loading ? "Loading..." : "Sign Up"}
           </button>
           <p className="mt-6 text-center text-sm">
             {" "}
             Already have an account? {""}
-            <Link to={`/login?redirect=${encodeURIComponent(redirect)}`} className="text-blue-500 ">
+            <Link
+              to={`/login?redirect=${encodeURIComponent(redirect)}`}
+              className="text-blue-500 "
+            >
               Login
             </Link>
           </p>

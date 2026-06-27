@@ -50,9 +50,10 @@ export const registerUser = createAsyncThunk(
       );
 
       localStorage.setItem("userInfo", JSON.stringify(response.data.user));
-      localStorage.setItem("userToken", esponse.data.token);
+      localStorage.setItem("userToken", response.data.token);
       return response.data.user;
     } catch (e) {
+      console.log("Error in Register =>",e.response.data);
       return rejectWithValue(e.response.data);
     }
   },

@@ -24,11 +24,12 @@ adminOrderRouter.put("/:id", protect, admin, async (req, res) => {
   try {
     const { status } = req.body;
 
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate("user","name");
+    console.log("Order is =>",order);
     if (order) {
       order.status = status || order.status;
       order.isDelivered =
-        status === "Delivered" ? true : orderRouter.isDelivered;
+        status === "Delivered" ? true : order.isDelivered;
       order.deliveredAt =
         status === "Delivered" ? Date.now() : order.deliveredAt;
 

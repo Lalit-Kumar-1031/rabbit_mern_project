@@ -13,6 +13,7 @@ export const fetchUserOrders = createAsyncThunk(
           Authorization: `Bearer ${localStorage.getItem("userToken")}`,
         },
       });
+      console.log("Orders =>",response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -23,15 +24,18 @@ export const fetchUserOrders = createAsyncThunk(
 //Async Thunk to fetch specific order
 export const fetchOrderDetails = createAsyncThunk(
   "orders/fetchOrderDetails",
-  async ({ orderId }, { rejectWithValue }) => {
+  async ( orderId , { rejectWithValue }) => {
+    console.log("Order Details Id =>",orderId);
     try {
       const response = await axios.get(`${Base_Url}/api/orders/${orderId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("userToken")}`,
         },
       });
+       console.log("Order Details Response =>",response.data);
       return response.data;
     } catch (error) {
+      console.log("Order Details Error =>",error);
       return rejectWithValue(error.response.data);
     }
   },

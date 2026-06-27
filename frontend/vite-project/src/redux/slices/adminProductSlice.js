@@ -6,7 +6,7 @@ const Base_Url = import.meta.env.VITE_BACKEND_URL;
 //Async Thunk for Fetch Admin Products
 export const fetchAdminProducts = createAsyncThunk(
   "adminProducts/fetchProducts",
-  async ({ rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${Base_Url}/api/admin/products`, {
         headers: {
@@ -47,7 +47,7 @@ export const updateProduct = createAsyncThunk(
   async ({ id, productData }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `${Base_Url}/api/admin/products/${id}`,
+        `${Base_Url}/api/products/${id}`,
         productData,
         {
           headers: {
@@ -67,13 +67,16 @@ export const deleteProduct = createAsyncThunk(
   "adminProducts/deleteProduct",
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`${Base_Url}/api/admin/products/${id}`, {
+      await axios.delete(`${Base_Url}/api/products/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("userToken")}`,
         },
       });
+      console.log("delete admin product =>", id);
       return id;
     } catch (error) {
+      console.log("Error in delete admin product =>", error.response);
+
       return rejectWithValue(error.response.data);
     }
   },

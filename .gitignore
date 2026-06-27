@@ -1,0 +1,14 @@
+#logs
+logs
+*.logs
+
+# Node Modules
+backend/node_modules/
+frontend/vite-project/node_modules/
+
+
+# Environment Variable
+backend/.env
+frontend/vite-project/.env
+
+.DS_Store

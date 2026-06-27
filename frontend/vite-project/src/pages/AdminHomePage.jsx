@@ -1,30 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { fetchAdminProducts } from "../redux/slices/adminProductSlice";
+import { fetchAllOrders } from "../redux/slices/adminOrderSlice";
+import Loading from "../components/Common/Loading";
 
 function AdminHomePage() {
-  const orders = [
-    {
-      _id: "123",
-      user: {
-        name: "John De",
-      },
-      totalPrice: 112,
-      status: "Processing",
-    },
-  ];
+  const dispatch=useDispatch();
+  const {products,loading:productLoading,error:productError}=useSelector((state)=>state.adminProducts);
+  const {orders,totalOrders,totalSales,loading:ordersLoading,error:orderError}=useSelector((state)=>state.adminOrders);
+
+  useEffect(()=>{
+    dispatch(fetchAdminProducts());
+    dispatch(fetchAllOrders());
+  },[dispatch ]);
+
   return (
     <div className="max-w-7xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <h1 className="text-3xl font-bold mb-6">Admin Dashboard ${totalSales}</h1>
+      {productLoading||ordersLoading?(
+        <Loading Title="Loading..."></Loading>
+      ):productError?(
+        <p className="text-red-500"> Product Error : {productError}</p>
+      ): orderError ?(
+         <p className="text-red-500"> Order Error : {orderError}</p>
+      ):(
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="p-4 shadow-md rounded-lg">
           <h2 className="text-xl font-semibold">Revenue</h2>
-          <p className="text-2xl">$10,000</p>
+          <p className="text-2xl">${Number(totalSales ?? 0).toFixed(2)}</p>
         </div>
         <div className="p-4 shadow-md rounded-lg">
           <h2 className="text-xl font-semibold">Total Orders</h2>
-          <p className="text-2xl">4</p>
+          <p className="text-2xl">{totalOrders}</p>
           <Link
-            to="admin/orders"
+            to="/admin/orders"
             className="text-sm text-blue-500 hover:underline"
           >
             Manage Orders
@@ -32,15 +42,17 @@ function AdminHomePage() {
         </div>
         <div className="p-4 shadow-md rounded-lg">
           <h2 className="text-xl font-semibold">Total Products</h2>
-          <p className="text-2xl">40</p>
+          <p className="text-2xl">{products?.length}</p>
           <Link
-            to="admin/products"
+            to="/admin/products"
             className="text-sm text-blue-500 hover:underline"
           >
             Manage Products
           </Link>
         </div>
       </div>
+      )}
+      
       {/* Table  */}
       <div className="mt-6">
         <h2 className="text-2xl font-bold mb-4">Recent Orders</h2>
@@ -61,9 +73,9 @@ function AdminHomePage() {
                     key={order._id}
                     className="border-b bg-gray-50 cursor-pointer"
                   >
-                    <td className="p-4">#{order._id}</td>
-                    <td className="p-4">{order.user.name}</td>
-                    <td className="p-4">${order.totalPrice}</td>
+                    <td className="p-4">#{order?._id??""}</td>
+                    <td className="p-4">{order?.user?.name??'' }</td>
+                    <td className="p-4">${order.totalPrice.toFixed(2)}</td>
                     <td className="p-4">{order.status}</td>
                   </tr>
                 ))

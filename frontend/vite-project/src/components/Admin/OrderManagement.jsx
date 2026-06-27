@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {fetchAllOrders} from '../../redux/slices/adminOrderSlice';
+import { updateOrderStatus } from "../../redux/slices/adminOrderSlice";
+import Loading from '../Common/Loading';
 
 function OrderManagement() {
-  const orders = [
-    {
-      _id: "8e8383737",
-      user: {
-        name: "Lalit",
-      },
-      status: "processing",
-      totalPrice: 100,
-    },
-  ];
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleStatusChange = (orderId, newStatus) => {};
+  const { user } = useSelector((state) => state.auth);
+  const { orders, loading, error } = useSelector((state) => state.adminOrders);
+
+  useEffect(() => {
+    if (user && user.role !== "admin") {
+      navigate("/");
+    } else if (user && user?.role === "admin") {
+      dispatch(fetchAllOrders());
+    }
+  }, [dispatch, user, navigate]);
+
+  const handleStatusChange = (orderId, newStatus) => {
+    dispatch(updateOrderStatus({id:orderId,status:newStatus}));    
+  };
+
+  if(loading) return <Loading Title="Loading Orders"></Loading>;
+  if(error) return <p>Error :{error}</p>;
 
   return (
     <div className="max-w-7xl mx-auto p-6">
@@ -32,32 +45,32 @@ function OrderManagement() {
             {orders.length > 0 ? (
               orders.map((order) => (
                 <tr
-                  key={order._id}
+                  key={order?._id}
                   className="border-b hover:bg-gray-50 cursor-pointer"
                 >
                   <td className="py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
-                    #{order._id}
+                    #{order?._id}
                   </td>
-                  <td className="py-3 px-4">{order.user.name}</td>
-                  <td className="py-3 px-4">${order.totalPrice}</td>
+                  <td className="py-3 px-4">{order?.user?.name}</td>
+                  <td className="py-3 px-4">${order?.totalPrice.toFixed(2)}</td>
                   <td className="py-3 px-4">
                     <select
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-                      value={order.status}
+                      value={order?.status}
                       onChange={(e) =>
                         handleStatusChange(order._id, e.target.value)
                       }
                     >
-                      <option value="processing">Processing</option>
-                      <option value="delivered">Shipped</option>
-                      <option value="delivered">Delivered</option>
-                      <option value="cancelled">Cancelled</option>
+                      <option value="Processing">Processing</option>
+                      <option value="Shipped">Shipped</option>
+                      <option value="Delivered">Delivered</option>
+                      <option value="Cancelled">Cancelled</option>
                     </select>
                   </td>
                   <td className="py-3 px-4">
                     <button
                       className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
-                      onChange={() =>
+                      onClick={() =>
                         handleStatusChange(order._id, "Delivered")
                       }
                     >

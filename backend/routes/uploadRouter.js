@@ -18,6 +18,9 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 uploadRouter.post("/", upload.single("image"), async (req, res) => {
+  console.log("Cloud Name:", process.env.CLOUDINARY_CLOUD_NAME);
+  console.log("API Key:", process.env.CLOUDINARY_API_KEY);
+  console.log("API Secret:", process.env.CLOUDINARY_API_SECRET);
   try {
     if (!req.file) {
       return res.status(404).json({ message: "No File Uploaded" });
@@ -44,6 +47,7 @@ uploadRouter.post("/", upload.single("image"), async (req, res) => {
 
     res.status(200).json({ imageUrl: result.secure_url });
   } catch (e) {
+    console.log("Error in Image Upload ->", e);
     res.status(500).json({ message: e.message });
   }
 });

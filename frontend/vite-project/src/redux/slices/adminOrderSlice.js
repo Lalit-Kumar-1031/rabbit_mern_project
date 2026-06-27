@@ -37,8 +37,10 @@ export const updateOrderStatus = createAsyncThunk(
           },
         },
       );
+       console.log("Order Status Updated =>",response.data);
       return response.data;
     } catch (error) {
+      console.log("Error in updating Order Status =>",error.response);
       return rejectWithValue(error.response.data);
     }
   },
@@ -86,8 +88,8 @@ const adminOrderSlice = createSlice({
 
         // calculate total sales
         const totalSale = action.payload.reduce((acc, order) => {
-          return acc + order.totalPrice;
-        });
+          return acc + Number(order.totalPrice || 0);
+        }, 0);
         state.totalSales = totalSale;
       })
       .addCase(fetchAllOrders.rejected, (state, action) => {
@@ -101,12 +103,16 @@ const adminOrderSlice = createSlice({
       })
       .addCase(updateOrderStatus.fulfilled, (state, action) => {
         const updatedOrder = action.payload;
+        console.log("Status Payload =>",action.payload);
         const orderIndex = state.orders.findIndex(
           (order) => order._id === updatedOrder._id,
         );
         if (orderIndex !== -1) {
           state.orders[orderIndex] = updatedOrder;
+
         }
+        state.loading = false;
+        state.error = null;
       })
       .addCase(updateOrderStatus.rejected, (state, action) => {
         state.loading = false;
@@ -121,6 +127,8 @@ const adminOrderSlice = createSlice({
         state.orders = state.orders.filter(
           (order) => order._id !== action.payload,
         );
+         state.loading = false;
+        state.error = null;
       })
       .addCase(deleteOrder.rejected, (state, action) => {
         state.loading = false;

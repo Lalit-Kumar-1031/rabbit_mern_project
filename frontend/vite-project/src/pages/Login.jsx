@@ -3,35 +3,33 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import login from "../assets/login.webp";
 import { loginUser } from "../redux/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import {mergeCart} from '../redux/slices/cartSlice';
+import { mergeCart } from "../redux/slices/cartSlice";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
-  const navigate=useNavigate();
-  const location=useLocation();
-  const {user,guestId} =useSelector((state)=>state.auth);
-  const {cart}=useSelector((state)=>state.cart);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user, guestId, loading } = useSelector((state) => state.auth);
+  const { cart } = useSelector((state) => state.cart);
 
   //Get the redirection parameter and check if its checkout and something else
-  const redirect=new URLSearchParams(location.search).get("redirect")||"/";
-  const isCheckoutRedirect=redirect.includes("checkout");
+  const redirect = new URLSearchParams(location.search).get("redirect") || "/";
+  const isCheckoutRedirect = redirect.includes("checkout");
 
-
-  useEffect(()=>{
-    if(user){
-      if(cart?.products.length>0 && guestId){
-        dispatch(mergeCart({guestId,user})).then(()=>{
-          navigate(isCheckoutRedirect?"/checkout":"/");
-        })
-      }else{
-        navigate(isCheckoutRedirect?"/checkout":"/");
+  useEffect(() => {
+    if (user) {
+      if (cart?.products.length > 0 && guestId) {
+        dispatch(mergeCart({ guestId, user })).then(() => {
+          navigate(isCheckoutRedirect ? "/checkout" : "/");
+        });
+      } else {
+        navigate(isCheckoutRedirect ? "/checkout" : "/");
       }
     }
-  },[user,guestId,cart,navigate,isCheckoutRedirect,dispatch]);
-
+  }, [user, guestId, cart, navigate, isCheckoutRedirect, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -71,12 +69,15 @@ function Login() {
             type="submit"
             className="bg-black text-white rounded-lg hover:bg-gray-700 text-center w-full p-2 font-semibold mt-2"
           >
-            Sign In
+            {loading ? "Loading..." : "Sign In"}
           </button>
           <p className="mt-6 text-center text-sm">
             {" "}
             Don't have an account? {""}
-            <Link to={`/register?redirect=${encodeURIComponent(redirect)}`} className="text-blue-500 ">
+            <Link
+              to={`/register?redirect=${encodeURIComponent(redirect)}`}
+              className="text-blue-500 "
+            >
               register
             </Link>
           </p>

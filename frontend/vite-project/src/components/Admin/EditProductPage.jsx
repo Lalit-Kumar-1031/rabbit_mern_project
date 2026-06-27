@@ -1,7 +1,22 @@
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useFetcher, useNavigate, useParams } from "react-router-dom";
+import { fetchOrderDetails } from "../../redux/slices/orderSlice";
+import axios from "axios";
+import { updateProduct } from "../../redux/slices/adminProductSlice";
+import Loading from "../Common/Loading";
+import { fetchProductDetails } from "../../redux/slices/productsSlice";
 
 function EditProductPage() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { selectedProducts, loading, error } = useSelector(
+    (state) => state.products,
+  );
+
   const [productData, setProductData] = useState({
     name: "",
     description: "",
@@ -28,6 +43,20 @@ function EditProductPage() {
     ],
   });
 
+  const [uploading, setUploading] = useState(false); // handle image uploading state
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchProductDetails(id));
+    }
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (selectedProducts) {
+      setProductData(selectedProducts);
+    }
+  }, [selectedProducts]);
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setProductData((prevData) => ({ ...prevData, [name]: value }));
@@ -36,12 +65,41 @@ function EditProductPage() {
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     console.log("File =>", file);
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      setUploading(true);
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/upload`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
+
+      setProductData((previousData) => ({
+        ...previousData,
+        images: [...previousData.images, { url: data.imageUrl, altText: "" }],
+      }));
+      setUploading(false);
+    } catch (error) {
+      console.log("Image Upload Error =>", error);
+      setUploading(false);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submit Data=>", productData);
+    dispatch(updateProduct({ id, productData }));
+    navigate("/admin/products");
   };
+
+  if (loading) return <Loading Title="Loading..."></Loading>;
+  if (error) return <p>Error : {error}</p>;
   return (
     <div className="max-w-5xl mx-auto p-6 shadow-md rounded-md">
       <h2 className="text-2xl font-bold mb-6">Edit Product</h2>
@@ -150,8 +208,17 @@ function EditProductPage() {
         {/* Image Upload */}
         <div className="mb-6">
           <label className="block font-semibold mb-2">Image Upload</label>
+
+          {uploading && (
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-5 h-5 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+              <span>Uploading image...</span>
+            </div>
+          )}
+
           <input
             type="file"
+            disabled={uploading}
             className="bg-gray-100 border px-2 py-1"
             onChange={handleImageUpload}
           />

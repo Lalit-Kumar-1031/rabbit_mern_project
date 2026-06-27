@@ -1,108 +1,28 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/Common/Loading";
+import {fetchUserOrders} from '../redux/slices/orderSlice';
 
 function MyOrderPage() {
-  const [orders, setOrders] = useState([]);
-
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { orders, loading, error } = useSelector((state) => state.orders);
 
   useEffect(() => {
-    // fetching the order
-    setTimeout(() => {
-      const mockOrders = [
-        {
-          _id: "102",
-          createdAt: new Date(),
-          shippingAddress: {
-            city: "New York",
-            country: "USA",
-          },
-          orderItems: [
-            {
-              name: "Apple iPhone 15 Pro",
-              image: "https://picsum.photos/500/500?random=1",
-            },
-          ],
-          totalPrice: 1200,
-          isPaid: true,
-        },
-
-        {
-          _id: "103",
-          createdAt: new Date(),
-          shippingAddress: {
-            city: "Los Angeles",
-            country: "USA",
-          },
-          orderItems: [
-            {
-              name: "Samsung Galaxy S24 Ultra",
-              image: "https://picsum.photos/500/500?random=2",
-            },
-          ],
-          totalPrice: 1100,
-          isPaid: false,
-        },
-
-        {
-          _id: "104",
-          createdAt: new Date(),
-          shippingAddress: {
-            city: "Chicago",
-            country: "USA",
-          },
-          orderItems: [
-            {
-              name: "Sony WH-1000XM5 Headphones",
-              image: "https://picsum.photos/500/500?random=3",
-            },
-          ],
-          totalPrice: 399,
-          isPaid: true,
-        },
-
-        {
-          _id: "105",
-          createdAt: new Date(),
-          shippingAddress: {
-            city: "Houston",
-            country: "USA",
-          },
-          orderItems: [
-            {
-              name: "Nike Air Max Sneakers",
-              image: "https://picsum.photos/500/500?random=4",
-            },
-          ],
-          totalPrice: 180,
-          isPaid: false,
-        },
-
-        {
-          _id: "106",
-          createdAt: new Date(),
-          shippingAddress: {
-            city: "San Francisco",
-            country: "USA",
-          },
-          orderItems: [
-            {
-              name: "Logitech Mechanical Keyboard",
-              image: "https://picsum.photos/500/500?random=5",
-            },
-          ],
-          totalPrice: 150,
-          isPaid: true,
-        },
-      ];
-
-      setOrders(mockOrders);
-    }, 1000);
-  }, []);
+    dispatch(fetchUserOrders());
+  }, [dispatch]);
 
   const handleRowClick = (orderId) => {
+    console.log("Order Id =>",orderId);
     navigate(`/order/${orderId}`);
   };
+
+  if(loading){
+    return <Loading Title="Loading Orders"></Loading>;
+  }if(error){
+    return <p>Error :{error}</p>;
+  }
 
   return (
     <div className="w-full mx-auto p-4 sm:p-6">
@@ -112,7 +32,7 @@ function MyOrderPage() {
           <thead className="bg-gray-100 text-xs uppercase text-gray-700">
             <tr>
               <th className="py-2 px-4 sm:py-3">Image</th>
-              <th className="py-2 px-4 sm:py-3">Order ID</th>
+              {/* <th className="py-2 px-4 sm:py-3">Order ID</th> */}
               <th className="py-2 px-4 sm:py-3">Created</th>
               <th className="py-2 px-4 sm:py-3">Shipping Address</th>
               <th className="py-2 px-4 sm:py-3">Items</th>
@@ -135,9 +55,9 @@ function MyOrderPage() {
                       className="w-10 h-10 sm:w-12 sm:h-12 object-cover"
                     />
                   </td>
-                  <td className="py-2 px-2 sm:py-4 sm:px-4 text-gray-900 font-medium whitespace-nowrap">
+                  {/* <td className="py-2 px-2 sm:py-4 sm:px-4 text-gray-900 font-medium whitespace-nowrap">
                     #{order._id}
-                  </td>
+                  </td> */}
                   <td className="py-2 px-2 sm:py-4 sm:px-4">
                     {new Date(order.createdAt).toLocaleDateString()}
                     {""}

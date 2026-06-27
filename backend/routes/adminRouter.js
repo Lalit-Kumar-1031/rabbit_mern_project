@@ -27,7 +27,7 @@ adminRouter.post("/", protect, admin, async (req, res) => {
     let user = await User.findOne({ email });
 
     if (user) {
-      return res.status(200).json({ message: "User already exist" });
+      return res.status(400).json({ message: "User already exist" });
     }
 
     // if not exist create new user

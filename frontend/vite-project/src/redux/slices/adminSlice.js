@@ -4,19 +4,28 @@ const Base_Url = import.meta.env.VITE_BACKEND_URL;
 
 // Fetch all admin Users
 
-export const fetchUsers = createAsyncThunk("admin/fetchUsers", async () => {
-  const response = await axios.get(`${Base_Url}/api/admin/users`, {
+export const fetchUsers = createAsyncThunk("admin/fetchUsers", async (_,{rejectWithValue}) => {
+
+  try {
+    const response = await axios.get(`${Base_Url}/api/admin/users`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("userToken")}`,
     },
   });
+  console.log("Users ==>",response.data);
   return response.data;
+    
+  } catch (error) {
+    console.log("Users Error==>",error.response);
+    return rejectWithValue(error.response.data);
+  }
+  
 });
 
 //Async Thunk to add new user
 export const addUser = createAsyncThunk(
   "admin/addUser",
-  async ({ userData }, { rejectWithValue }) => {
+  async ( userData , { rejectWithValue }) => {
     try {
       const response = await axios.post(
         `${Base_Url}/api/admin/users`,
@@ -27,8 +36,10 @@ export const addUser = createAsyncThunk(
           },
         },
       );
+       console.log("add User ==>",response.data);
       return response.data;
     } catch (error) {
+       console.log(" add User Error==>",error.response);
       return rejectWithValue(error.response.data);
     }
   },
@@ -135,7 +146,7 @@ const adminSlice = createSlice({
       })
       .addCase(addUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.users.push(action.payload.user);
+        state.users.push(action.payload);
       })
       .addCase(addUser.rejected, (state, action) => {
         state.loading = false;
