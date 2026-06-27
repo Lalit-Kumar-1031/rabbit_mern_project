@@ -17,7 +17,7 @@ function AdminHomePage() {
 
   return (
     <div className="max-w-7xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Admin Dashboard ${totalSales}</h1>
+      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
       {productLoading||ordersLoading?(
         <Loading Title="Loading..."></Loading>
       ):productError?(
